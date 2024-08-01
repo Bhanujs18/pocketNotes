@@ -1,0 +1,31 @@
+.section{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.encryption{
+    position: absolute;
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+    p{
+        margin: 0%;
+    }
+    bottom: 1%;
+}
+
+.LoadImg{
+    width: 60%;
+    img{
+        width: 70%;
+    }
+    h1{
+        font-size: 2rem;
+    }
+    p{
+        text-align: center;
+        font-weight: 400;
+    }
+}
