@@ -11,7 +11,6 @@ const DashBoard = () => {
     const [category , setCategory] = useState()
     const [pageContent , setPageContent] = useState();
     const fetchData = async() => {
-        console.log("i m not called")
         const res = await getSubjects()
         if(res.data){
             setData(res?.data?.data)
@@ -24,14 +23,18 @@ const DashBoard = () => {
             const filteredData = mainData.filter((cur)=> cur.subject === category); 
             if(filterData){
                 setPageContent(...filteredData);
+                setSHowContent(true)
             }
         }
     }
 
 
     useEffect(()=>{
+        console.log(category)
         fetchData()
+        console.log(!!pageContent)
     },[category])
+
   return (
     <section className={styles.section}>
         <div className={styles.leftSection}>
@@ -39,7 +42,7 @@ const DashBoard = () => {
         </div>
 
         <div className={styles.rightSection}>
-        {pageContent ? <Content pageContent={pageContent}/>  : <LoadScreen />}
+        {!!pageContent ? <Content pageContent={pageContent}/>  : <LoadScreen />}
         </div>
     </section>
   )

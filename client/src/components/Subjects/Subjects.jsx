@@ -2,8 +2,10 @@ import React, { useEffect, useState } from 'react'
 import styles from './Subjects.module.css'
 import { saveSubject } from '../../apis/subject'
 import { FaShareAlt } from "react-icons/fa";
-import { ToastContainer, toast } from 'react-toastify';
+// import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import {BarLoader } from 'react-spinners'
+
 const Subjects = ({setSHowContent , mainData , setCategory}) => {
     const [addSubject , setAddSubject] = useState(false)
     const [color , setColor] = useState("#001F8B")
@@ -25,6 +27,7 @@ const Subjects = ({setSHowContent , mainData , setCategory}) => {
         setData(res?.data?.data)
         }
         setCategory(currentSubject)
+        setAddSubject(false)
     }
 
     const getInitials = (subName) =>{
@@ -45,8 +48,8 @@ const Subjects = ({setSHowContent , mainData , setCategory}) => {
     }
        
    const shareSubject = async(name) => {
-    await navigator.clipboard.writeText(`http://localhost:5173/sharedSubject/${name}`);
-    toast.success('🦄Link Coppied!');
+    await navigator.clipboard.writeText(`https://pocketnotes-bhanu.netlify.app/sharedSubject/${name}`);
+    // toast.success('🦄Link Coppied!');
    }
 
     useEffect(()=>{
@@ -55,11 +58,12 @@ const Subjects = ({setSHowContent , mainData , setCategory}) => {
 
     useEffect(()=>{
       setCategory(currentSubject);
+      setSHowContent(true);
     },[currentSubject])
 
     useEffect(()=>{
      if(search){
-        let searchData = mainData.filter((cur)=>cur.subject.includes(search))
+        let searchData = mainData?.filter((cur)=>cur?.subject?.toLowerCase().includes(search?.toLowerCase()))
        setSubjects(searchData)
      }
      else{
@@ -74,7 +78,7 @@ const Subjects = ({setSHowContent , mainData , setCategory}) => {
             <input placeholder='Search' value={search} onChange={(e)=>setSearch(e.target.value)} /> 
             </div>
         <div className={styles.categories}>
-            {subjects && subjects?.map((cur , index)=>(
+            {subjects.length>0 ? subjects?.map((cur , index)=>(
                 <div className={styles.cardDiv} onClick={()=>setCurrentSubject(cur.subject)} id={currentSubject===cur.subject ? styles.bg : "none"}>
                     <div className={styles.card} onClick={()=>setSHowContent(true)}>
                       <div style={{background:`${cur.color}`}}>{getInitials(cur?.subject)}</div>
@@ -82,9 +86,13 @@ const Subjects = ({setSHowContent , mainData , setCategory}) => {
                     </div>
                     <FaShareAlt className={styles.share} onClick={()=>shareSubject(cur?.subject)}/>
            </div>
-            ))}
+            )) 
+        : 
+        <div className={styles.loading}>
+        <BarLoader  color='#150087' />
+        </div>}
         </div>
-
+          
         <button className={styles.addSubject} onClick={()=>setAddSubject(true)}>+</button>
 
       {addSubject &&
@@ -109,10 +117,10 @@ const Subjects = ({setSHowContent , mainData , setCategory}) => {
                <div className={styles.create}>
                  <button onClick={()=>handleSubject()}>Create</button>
                </div>
-               <button onClick={()=>setAddSubject(false)}>Close</button>
+               <button className={styles.close} onClick={()=>setAddSubject(false)}>Close</button>
             </div>
         </div>}
-        <ToastContainer />
+        {/* <ToastContainer /> */}
     </section>
   )
 }

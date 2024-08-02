@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const url = "http://localhost:3000/api/v1/subject"
+const url = "https://pocketnotes-0d1o.onrender.com/api/v1/subject"
 
 export const saveSubject = async (subjectDetails) => {
     try {

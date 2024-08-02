@@ -6,6 +6,8 @@ const db = require('./db');
 app.use(cors())
 app.use(express.json())
 
+const port = 3000;
+
 db();
 app.get("/" , (req, res)=>{
     res.status(200).json({message : "Server is running"});
@@ -13,6 +15,6 @@ app.get("/" , (req, res)=>{
 
 app.use("/api/v1/subject" , subjectRoutes)
 
-app.listen(3000 , ()=>{
+app.listen(port , ()=>{
     console.log("server is running at 3000")
 })

@@ -5,11 +5,12 @@ import { getNotes, saveNote } from '../../apis/subject';
 import { GoDotFill } from "react-icons/go";
 import { FaSearch } from "react-icons/fa";
 import { FaShare } from "react-icons/fa";
-import { ToastContainer, toast } from 'react-toastify';
+// import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 
 const Content = ({pageContent}) => {
+    console.log("i m rendered")
     const [subjectNotes , setSubjectNotes] = useState([])
     const [search , setSearch] = useState('')
     const [notes , setNotes] = useState({
@@ -31,7 +32,7 @@ const Content = ({pageContent}) => {
    if(res?.data){
     const catWiseData = res?.data?.data?.filter((cur)=>cur.subject === pageContent.subject)
     if(search.length>0){
-      const searched = catWiseData.filter((cur)=>cur.note.includes(search));
+      const searched = catWiseData?.filter((cur)=>cur?.note?.toLowerCase().includes(search?.toLowerCase()));
       setSubjectNotes(searched);
     }
     else{
@@ -41,8 +42,8 @@ const Content = ({pageContent}) => {
   }
 
   const shareNote = async(note) => {
-    await navigator.clipboard.writeText(`http://localhost:5173/sharedNotes/${note}`);
-    toast.success('🦄Link Coppied!');
+    await navigator.clipboard.writeText(`https://pocketnotes-bhanu.netlify.app/sharedNotes/${note}`);
+    // toast.success('🦄Link Coppied!');
   }
 
   useEffect(()=>{
@@ -116,7 +117,7 @@ const Content = ({pageContent}) => {
           {notes.note.length > 0 &&  
          <button className={styles.send}><IoSend onClick={()=>handleNote()} /></button>}
         </div>
-        <ToastContainer className={styles.toast} />
+        {/* <ToastContainer className={styles.toast} /> */}
     </section>
   )
 }
