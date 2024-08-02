@@ -58,6 +58,19 @@
     padding: 1rem 0rem;
     overflow-y: scroll;
 }
+.content::-webkit-scrollbar {
+    width: 9px;             
+  }
+  
+  .content::-webkit-scrollbar-track {
+    background: #5b5858;        
+  }
+  
+  .content::-webkit-scrollbar-thumb {
+    background-color: white;
+    border: 1px #d9d9d9 solid;
+    border-radius: 15px;
+  }
 
 .type{
     height: 30vh;
@@ -94,11 +107,24 @@
     align-items: start;
     width: max-content;
     width: 90%;
-    padding: 0.3rem 1rem;
+    position: relative;
+    padding: 0.5rem 1rem;
     background-color: white;
     box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;    border-radius: 9px;
-    p{margin: 0; 
+    p{
+    width: 98%;
+    margin: 0; 
     text-align: justify;}
+}
+.share{
+    position: absolute;
+    right: 1%;
+    color: grey;
+    top: 10%;
+    cursor: pointer;
+}
+.share:hover{
+    color: #001F8B;
 }
 
 .timestamps{
@@ -111,7 +137,13 @@
     display: flex;
     align-items: center;
     gap: 0.3rem;
-    color: black;
-    font-size: 0.8rem;
+    color: grey;
+    font-size: 0.7rem;
     font-weight: 600;
+}
+
+.toast{
+    position: fixed;
+    top: 10%;
+    right: 10%;
 }

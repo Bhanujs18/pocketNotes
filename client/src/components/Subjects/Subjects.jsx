@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import styles from './Subjects.module.css'
 import { saveSubject } from '../../apis/subject'
+import { FaShareAlt } from "react-icons/fa";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 const Subjects = ({setSHowContent , mainData , setCategory}) => {
     const [addSubject , setAddSubject] = useState(false)
     const [color , setColor] = useState("#001F8B")
@@ -41,8 +44,10 @@ const Subjects = ({setSHowContent , mainData , setCategory}) => {
     }
     }
        
-
-    getInitials("Hello Henry")
+   const shareSubject = async(name) => {
+    await navigator.clipboard.writeText(`http://localhost:5173/sharedSubject/${name}`);
+    toast.success('🦄Link Coppied!');
+   }
 
     useEffect(()=>{
        setData((prev)=>({...prev , subjectColor:color}))
@@ -73,8 +78,9 @@ const Subjects = ({setSHowContent , mainData , setCategory}) => {
                 <div className={styles.cardDiv} onClick={()=>setCurrentSubject(cur.subject)} id={currentSubject===cur.subject ? styles.bg : "none"}>
                     <div className={styles.card} onClick={()=>setSHowContent(true)}>
                       <div style={{background:`${cur.color}`}}>{getInitials(cur?.subject)}</div>
-                       <p>{cur.subject}</p>
-                </div>
+                       <p>{cur.subject}</p>    
+                    </div>
+                    <FaShareAlt className={styles.share} onClick={()=>shareSubject(cur?.subject)}/>
            </div>
             ))}
         </div>
@@ -106,6 +112,7 @@ const Subjects = ({setSHowContent , mainData , setCategory}) => {
                <button onClick={()=>setAddSubject(false)}>Close</button>
             </div>
         </div>}
+        <ToastContainer />
     </section>
   )
 }

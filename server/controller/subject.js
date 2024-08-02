@@ -11,7 +11,6 @@ try {
      notes : messages,
     })
 
-    console.log(newSubject)
     await newSubject.save();
     const response = await Subject.find({});
     res.status(200).json({data : response});
@@ -23,7 +22,6 @@ try {
 const getSubjects = async(req, res) => {
     try {
         const response = await Subject.find({});
-        console.log(response)
         res.status(200).json({data : response});
     } catch (error) {
         console.log(error)
@@ -56,4 +54,15 @@ const addNote = async (req, res) => {
     }
     }
 
-module.exports = {addSubject , getSubjects , addNote , getNotes}
+    const fetchNoteById = async (req, res) => {
+        const {id} = req.params;
+        console.log(id)
+       const data = await Note.find({_id :id})
+       if(data){
+        res.status(200).json({data})
+        return;
+       }
+       res.status(200).json({error : "No data found"})
+    }
+
+module.exports = {addSubject , getSubjects , addNote , getNotes , fetchNoteById}

@@ -39,3 +39,12 @@ export const getNotes = async () => {
         
     }
 }
+
+export const fetchNote = async (id) => {
+    try {
+        const res = await axios.get(`${url}/getNoteById/${id}`)
+        return res;
+    } catch (error) {
+        
+    }
+}

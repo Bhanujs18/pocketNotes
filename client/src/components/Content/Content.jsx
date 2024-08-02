@@ -4,10 +4,14 @@ import { IoSend } from "react-icons/io5";
 import { getNotes, saveNote } from '../../apis/subject';
 import { GoDotFill } from "react-icons/go";
 import { FaSearch } from "react-icons/fa";
+import { FaShare } from "react-icons/fa";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 const Content = ({pageContent}) => {
     const [subjectNotes , setSubjectNotes] = useState([])
+    const [search , setSearch] = useState('')
     const [notes , setNotes] = useState({
         note : "",
         subject : ""
@@ -26,10 +30,24 @@ const Content = ({pageContent}) => {
    const res = await getNotes();
    if(res?.data){
     const catWiseData = res?.data?.data?.filter((cur)=>cur.subject === pageContent.subject)
+    if(search.length>0){
+      const searched = catWiseData.filter((cur)=>cur.note.includes(search));
+      setSubjectNotes(searched);
+    }
+    else{
     setSubjectNotes(catWiseData)
+    }
    }
   }
 
+  const shareNote = async(note) => {
+    await navigator.clipboard.writeText(`http://localhost:5173/sharedNotes/${note}`);
+    toast.success('🦄Link Coppied!');
+  }
+
+  useEffect(()=>{
+   fetchNotes()
+  },[search])
 
     useEffect(()=>{
         fetchNotes()
@@ -76,7 +94,7 @@ const Content = ({pageContent}) => {
             <h1>{pageContent?.subject}</h1>
             </div>
             <label>
-            <input placeholder='Search...'/>
+            <input placeholder='Search...' onChange={(e)=>setSearch(e.target.value)} />
                 <FaSearch />
             </label>
             </div>
@@ -86,6 +104,7 @@ const Content = ({pageContent}) => {
             return(
            <div className={styles.note}>
             <p style={{color:'black'}}>{cur?.note}</p>
+            <FaShare className={styles.share} onClick={()=>shareNote(cur?._id)} />
             <div className={styles.timestamps}>
             <div className={styles.time}>{formatDate(cur.createdAt)} <GoDotFill /> {formatTime(cur.createdAt)}</div>
             </div>
@@ -97,6 +116,7 @@ const Content = ({pageContent}) => {
           {notes.note.length > 0 &&  
          <button className={styles.send}><IoSend onClick={()=>handleNote()} /></button>}
         </div>
+        <ToastContainer className={styles.toast} />
     </section>
   )
 }

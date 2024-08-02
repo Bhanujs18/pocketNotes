@@ -24,10 +24,26 @@
     align-items: center;
 }
 
+  .categories::-webkit-scrollbar {
+    width: 9px;             
+  }
+  
+  .categories::-webkit-scrollbar-track {
+    background: #5b5858;        
+  }
+  
+  .categories::-webkit-scrollbar-thumb {
+    background-color: white;
+    border: 1px #d9d9d9 solid;
+    border-radius: 15px;
+  }
+  
+
 .cardDiv{
     width: 100%;
     display: flex;
     justify-content: center;
+    align-items: center;
 }
 
 .card{
@@ -49,7 +65,7 @@
     }
     p{
         margin: 0%;
-        width: 80%;
+        width: max-content;
     }
 }
 
@@ -177,4 +193,8 @@
         border-bottom: 2px grey solid;
         outline: none;
     }
+}
+
+.share{
+    cursor: pointer;
 }

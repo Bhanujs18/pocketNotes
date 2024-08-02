@@ -8,5 +8,6 @@ router.get("/getSubjects" , subjectController.getSubjects)
 
 router.post("/saveNote" , subjectController.addNote)
 router.get("/getNotes" , subjectController.getNotes)
+router.get("/getNoteById/:id" , subjectController.fetchNoteById)
 
 module.exports = router;
